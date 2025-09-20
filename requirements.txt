@@ -1,0 +1,5 @@
+streamlit==1.28.0
+azure-cosmos==4.5.1
+azure-identity==1.22.0
+pandas
+python-dotenv
