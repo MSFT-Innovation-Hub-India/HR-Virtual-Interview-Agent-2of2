@@ -12,94 +12,134 @@ try:
 except ImportError:
     pass  # python-dotenv not installed, skip loading .env file
 
+# Import configurations
+from config import CUSTOMER_CONFIG, STREAMLIT_CONFIG, DISPLAY_CONFIG
+
 # Configure page
 st.set_page_config(
-    page_title="HR Interview Outcome Viewer",
-    page_icon="👥",
-    layout="wide",
+    page_title=STREAMLIT_CONFIG["page_title"],
+    page_icon=STREAMLIT_CONFIG["page_icon"],
+    layout=STREAMLIT_CONFIG["layout"],
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for better styling
-st.markdown("""
+# Custom CSS for customer branding
+brand_color = CUSTOMER_CONFIG["brand_color"]
+accent_color = CUSTOMER_CONFIG["accent_color"]
+secondary_color = CUSTOMER_CONFIG["secondary_color"]
+
+st.markdown(f"""
 <style>
-    .main-header {
+    /* Main header styling with customer brand colors */
+    .main-header {{
         font-size: 2.5rem;
         font-weight: bold;
-        color: #1f77b4;
+        color: {brand_color};
+        text-align: center;
+        margin-bottom: 1rem;
+    }}
+    
+    .company-subtitle {{
+        font-size: 1.2rem;
+        color: #666;
         text-align: center;
         margin-bottom: 2rem;
-    }
+        font-style: italic;
+    }}
     
-    .candidate-card {
+    .company-logo {{
+        display: block;
+        margin: 0 auto 1rem auto;
+        max-height: 60px;
+    }}
+    
+    /* Brand-colored elements */
+    .candidate-card {{
         background-color: #f8f9fa;
         padding: 1.5rem;
         border-radius: 10px;
-        border-left: 5px solid #1f77b4;
+        border-left: 5px solid {brand_color};
         margin-bottom: 1rem;
-    }
+    }}
     
-    .conversation-container {
+    .position-header {{
+        background: linear-gradient(135deg, {brand_color} 0%, {accent_color} 100%);
+        color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+    }}
+    
+    .metric-card {{
+        background-color: white;
+        border: 2px solid {brand_color};
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+    }}
+    
+    .conversation-container {{
         max-height: 600px;
         overflow-y: auto;
         padding: 1rem;
         background-color: #f8f9fa;
         border-radius: 10px;
-    }
+        border: 1px solid {accent_color};
+    }}
     
-    .user-message {
+    .user-message {{
         background-color: #e3f2fd;
         padding: 0.8rem;
         border-radius: 10px;
         margin: 0.5rem 0;
         margin-left: 2rem;
-    }
+    }}
     
-    .assistant-message {
+    .assistant-message {{
         background-color: #f3e5f5;
         padding: 0.8rem;
         border-radius: 10px;
         margin: 0.5rem 0;
         margin-right: 2rem;
-    }
+    }}
     
-    .role-label {
+    .role-label {{
         font-weight: bold;
         font-size: 0.9rem;
         margin-bottom: 0.3rem;
-    }
+    }}
     
-    .user-label {
-        color: #1565c0;
-    }
+    .user-label {{
+        color: {brand_color};
+    }}
     
-    .assistant-label {
-        color: #7b1fa2;
-    }
+    .assistant-label {{
+        color: {accent_color};
+    }}
     
-    .assessment-section {
+    .assessment-section {{
         background-color: white;
         padding: 1.5rem;
         border-radius: 10px;
         border: 1px solid #e0e0e0;
         margin-bottom: 1rem;
-    }
+    }}
     
-    .verdict-go {
+    .verdict-go {{
         background-color: #c8e6c9;
         color: #2e7d32;
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         font-weight: bold;
-    }
+    }}
     
-    .verdict-no-go {
+    .verdict-no-go {{
         background-color: #ffcdd2;
         color: #c62828;
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         font-weight: bold;
-    }
+    }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -212,7 +252,8 @@ def show_interview_feedback(feedback_data):
 
 def show_interview_detail(interview_data):
     """Show detailed view of a single interview"""
-    st.markdown('<h1 class="main-header">📄 Interview Details</h1>', unsafe_allow_html=True)
+    company_name = CUSTOMER_CONFIG["company_name"]
+    st.markdown(f'<h1 class="main-header">📄 {company_name} Interview Details</h1>', unsafe_allow_html=True)
     
     # Back button
     if st.button("← Back to Interview List", type="secondary"):
@@ -269,7 +310,18 @@ def show_interview_detail(interview_data):
 
 def show_interview_grid():
     """Show the main grid view of interviews"""
-    st.markdown('<h1 class="main-header">👥 HR Interview Outcomes</h1>', unsafe_allow_html=True)
+    # Customer-branded header
+    company_name = CUSTOMER_CONFIG["company_name"]
+    app_title = CUSTOMER_CONFIG["app_title"]
+    app_subtitle = CUSTOMER_CONFIG["app_subtitle"]
+    logo_url = CUSTOMER_CONFIG["company_logo_url"]
+    
+    # Display logo if provided
+    if logo_url:
+        st.markdown(f'<img src="{logo_url}" class="company-logo">', unsafe_allow_html=True)
+    
+    st.markdown(f'<h1 class="main-header">{CUSTOMER_CONFIG["favicon"]} {app_title}</h1>', unsafe_allow_html=True)
+    st.markdown(f'<p class="company-subtitle">{app_subtitle}</p>', unsafe_allow_html=True)
     
     # Get connection and data
     cosmos_conn = get_cosmos_connection()
@@ -350,7 +402,8 @@ def show_interview_grid():
     st.markdown("---")
     
     # Search and filter
-    search_term = st.text_input("🔍 Search by candidate name or position:", "")
+    search_placeholder = DISPLAY_CONFIG["search_placeholder"]
+    search_term = st.text_input(f"🔍 {search_placeholder}", "")
     
     if search_term:
         df_filtered = df[
@@ -377,9 +430,9 @@ def show_interview_grid():
         success_rate_pos = (go_count_pos / total_count_pos * 100) if total_count_pos > 0 else 0
         
         st.markdown(f"""
-        <div style="background-color: #f0f2f6; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
-            <h4 style="margin: 0; color: #1f77b4;">💼 {position}</h4>
-            <p style="margin: 0.5rem 0 0 0; color: #666;">
+        <div class="position-header">
+            <h4 style="margin: 0;">💼 {position}</h4>
+            <p style="margin: 0.5rem 0 0 0; color: rgba(255,255,255,0.9);">
                 {total_count_pos} interviews • {go_count_pos} GO verdicts • {success_rate_pos:.1f}% success rate
             </p>
         </div>

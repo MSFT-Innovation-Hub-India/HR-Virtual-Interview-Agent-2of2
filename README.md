@@ -1,13 +1,19 @@
 # Interview Outcome Viewer
 
-A Streamlit web application to view and analyze HR virtual interview assessments stored in Azure Cosmos DB.
+A customizable Streamlit web application to view and analyze HR virtual interview assessments stored in Azure Cosmos DB. Built for enterprise customers with full branding customization.
 
 ## Features
 
-- Browse interview records in a scrollable grid
-- View detailed interview outcomes and assessments
-- Interactive conversation viewer with chat-like interface
-- Azure authentication using default credentials
+- **Customer Branding**: Fully customizable with company colors, logos, and titles
+- **Grouped Display**: Interview records organized by position with statistics
+- **Detailed Analytics**: Position-wise success rates and metrics
+- **Interactive Conversation Viewer**: Chat-like interface for interview dialogues
+- **Azure Integration**: Secure authentication using Azure default credentials
+- **Multi-Customer Support**: Easy configuration switching for different clients
+
+## Quick Start for PhonePe
+
+The application comes pre-configured for PhonePe with their brand colors and styling.
 
 ## Setup
 
@@ -58,7 +64,34 @@ The app connects to:
 - Database: `db001`
 - Container: `hr-interview-assessment`
 
-### Custom Configuration
+### Customer Branding Configuration
+Customize the app for different customers using environment variables:
+
+**Company Branding:**
+- `COMPANY_NAME` - Company name (e.g., "PhonePe")
+- `APP_TITLE` - Application title (e.g., "PhonePe HR Interview Outcomes")
+- `APP_SUBTITLE` - Subtitle/tagline
+- `COMPANY_LOGO_URL` - Optional logo URL
+
+**Brand Colors (hex codes):**
+- `BRAND_COLOR` - Primary brand color (e.g., "#5f259f" for PhonePe purple)
+- `ACCENT_COLOR` - Secondary accent color (e.g., "#00d4aa" for PhonePe teal)
+- `SECONDARY_COLOR` - Background/text color (typically "#ffffff")
+- `FAVICON` - App icon (emoji or URL)
+
+**Quick Customer Setup:**
+```bash
+# For PhonePe (default)
+copy customer-configs\\phonepe.env .env
+
+# For Microsoft
+copy customer-configs\\microsoft.env .env
+
+# For generic corporate
+copy customer-configs\\generic.env .env
+```
+
+### Database Configuration
 You can override these values using environment variables:
 - `COSMOS_DB_ENDPOINT` - Your Cosmos DB endpoint URL
 - `COSMOS_DB_DATABASE` - Your database name  
