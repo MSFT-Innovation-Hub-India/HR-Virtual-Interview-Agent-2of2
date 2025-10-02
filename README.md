@@ -1,5 +1,8 @@
 # Interview Outcome Viewer
 
+> **Note**: This repository is a companion to [HR-Virtu# For Contoso (default)
+copy customer-configs\contoso.env .env-Interview-Agent-1of2](https://github.com/MSFT-Innovation-Hub-India/HR-Virtual-Interview-Agent-1of2) and is part of the overall **Azure AI Voice Live API powered Virtual Interview Agent** solution.
+
 A customizable Streamlit web application to view and analyze HR virtual interview assessments stored in Azure Cosmos DB. Built for enterprise customers with full branding customization.
 
 ## Features
@@ -11,9 +14,9 @@ A customizable Streamlit web application to view and analyze HR virtual intervie
 - **Azure Integration**: Secure authentication using Azure default credentials
 - **Multi-Customer Support**: Easy configuration switching for different clients
 
-## Quick Start for PhonePe
+## Quick Start for Contoso
 
-The application comes pre-configured for PhonePe with their brand colors and styling.
+The application comes pre-configured for Contoso with their brand colors and styling.
 
 ## Setup
 
@@ -68,14 +71,14 @@ The app connects to:
 Customize the app for different customers using environment variables:
 
 **Company Branding:**
-- `COMPANY_NAME` - Company name (e.g., "PhonePe")
-- `APP_TITLE` - Application title (e.g., "PhonePe HR Interview Outcomes")
+- `COMPANY_NAME` - Company name (e.g., "Contoso")
+- `APP_TITLE` - Application title (e.g., "Contoso HR Interview Outcomes")
 - `APP_SUBTITLE` - Subtitle/tagline
 - `COMPANY_LOGO_URL` - Optional logo URL
 
 **Brand Colors (hex codes):**
-- `BRAND_COLOR` - Primary brand color (e.g., "#5f259f" for PhonePe purple)
-- `ACCENT_COLOR` - Secondary accent color (e.g., "#00d4aa" for PhonePe teal)
+- `BRAND_COLOR` - Primary brand color (e.g., "#0078d4" for Contoso blue)
+- `ACCENT_COLOR` - Secondary accent color (e.g., "#00bcf2" for Contoso light blue)
 - `SECONDARY_COLOR` - Background/text color (typically "#ffffff")
 - `FAVICON` - App icon (emoji or URL)
 
