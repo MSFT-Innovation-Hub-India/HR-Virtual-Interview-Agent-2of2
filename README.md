@@ -14,6 +14,13 @@ A customizable Streamlit web application to view and analyze HR virtual intervie
 - **Azure Integration**: Secure authentication using Azure default credentials
 - **Multi-Customer Support**: Easy configuration switching for different clients
 
+## Application Overview
+
+### Main Dashboard
+The application provides a clean, organized view of all interview records grouped by job positions:
+
+![Landing Page](images/landingpage.png)
+
 ## Quick Start for Contoso
 
 The application comes pre-configured for Contoso with their brand colors and styling.
@@ -111,3 +118,8 @@ You can override these values using environment variables:
 2. View overall and position-specific statistics
 3. Click on any record to view detailed assessment
 4. Use the conversation panel to review the interview dialogue
+
+### Detailed Assessment View
+When you click on an interview record, you'll see a comprehensive assessment with scores, feedback, and conversation history:
+
+![Detailed Assessment](images/DetailedAssessment.png)
